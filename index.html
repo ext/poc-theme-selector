@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>poc theme selector</title>
+	</head>
+	<link rel="preconnect" href="https://rsms.me/" />
+	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+	<link rel="stylesheet" href="variables-standalone.css" id="theme-standalone" disabled />
+	<link rel="stylesheet" href="variables-iframe.css" id="theme-iframe" disabled />
+	<link rel="stylesheet" href="style.css" />
+	<style>
+		:root {
+			font-family: Inter, sans-serif;
+			font-feature-settings:
+				"liga" 1,
+				"calt" 1; /* fix for Chrome */
+		}
+		@supports (font-variation-settings: normal) {
+			:root {
+				font-family: InterVariable, sans-serif;
+			}
+		}
+		main {
+			width: 80ch;
+			margin: auto;
+		}
+	</style>
+	<body>
+		<main>
+			<h1>Example application</h1>
+			<p>Lorem ipsum <span class="thingamajig">dolor</span> sit amet.</p>
+			<p class="variant variant--standalone">
+				This application is now running in <span class="thingamajig">standalone</span> mode
+			</p>
+			<p class="variant variant--iframed">
+				This application is now running in <span class="thingamajig">iframe</span>
+			</p>
+		</main>
+	</body>
+	<script>
+		if (window.self === window.top) {
+			console.log("Application is running %cSTANDALONE%c!", "color: green", "");
+			document.getElementById("theme-standalone").disabled = false;
+		} else {
+			console.log("Application is running %cIFRAMED%c!", "color: blue", "");
+			document.getElementById("theme-iframe").disabled = false;
+		}
+	</script>
+</html>

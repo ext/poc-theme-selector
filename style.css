@@ -1,0 +1,20 @@
+.thingamajig {
+	font-style: italic;
+	color: var(--thingamajig-color);
+}
+
+.variant {
+	display: none;
+}
+
+@container style(--theme: "standalone") {
+	.variant--standalone {
+		display: block;
+	}
+}
+
+@container style(--theme: "iframe") {
+	.variant--iframed {
+		display: block;
+	}
+}
