@@ -29,23 +29,57 @@
 		<main>
 			<h1>Example application</h1>
 			<p>Lorem ipsum <span class="thingamajig">dolor</span> sit amet.</p>
-			<p class="variant variant--standalone">
-				This application is now running in <span class="thingamajig">standalone</span> mode.
-				<a href="iframe.html">Go to iframed version.</a>.
-			</p>
-			<p class="variant variant--iframed">
-				This application is now running in <span class="thingamajig">iframe</span>.
-				<a href="index.html" target="_top">Go to standalone version.</a>.
-			</p>
+			<div class="variant variant--standalone">
+				<p>This application is now running in <span class="thingamajig">standalone</span> mode.</p>
+				<p>
+					In this variant the styling comes from the application itself (and has detected it is not
+					running inside an iframe).
+				</p>
+				<p>Other variants:</p>
+				<ul>
+					<li><a href="iframe.html" target="_top">Iframed</a></li>
+					<li><a href="injected.html" target="_top">Injected</a></li>
+				</ul>
+			</div>
+			<div class="variant variant--iframed">
+				<p>This application is now running in <span class="thingamajig">iframed</span> mode.</p>
+				<p>
+					In this variant the styling still comes from the application but it has selected a
+					different theme as it detected to be running in an iframe.
+				</p>
+				<p>Other variants:</p>
+				<ul>
+					<li><a href="index.html" target="_top">Standalone</a></li>
+					<li><a href="injected.html" target="_top">Injected</a></li>
+				</ul>
+			</div>
+			<div class="variant variant--injected">
+				<p>This application is now running in <span class="thingamajig">injected</span> mode.</p>
+				<p>
+					In this variant the styling comes from the parent window (i.e. it is injected by the
+					parent into this application).
+				</p>
+				<p>Other variants:</p>
+				<ul>
+					<li><a href="index.html" target="_top">Standalone</a></li>
+					<li><a href="iframe.html" target="_top">Iframe</a></li>
+				</ul>
+			</div>
 		</main>
+		<script type="module">
+			const url = new URL(import.meta.url);
+			const isInjected = url.searchParams.has("injected");
+			const isIframe = window.self !== window.top;
+
+			if (isInjected) {
+				console.log("Application is running %cINJECTED%c!", "color: #0f0", "");
+			} else if (isIframe) {
+				console.log("Application is running %cIFRAMED%c!", "color: #f0a", "");
+				document.getElementById("theme-iframe").disabled = false;
+			} else {
+				console.log("Application is running %cSTANDALONE%c!", "color: green", "");
+				document.getElementById("theme-standalone").disabled = false;
+			}
+		</script>
 	</body>
-	<script>
-		if (window.self === window.top) {
-			console.log("Application is running %cSTANDALONE%c!", "color: green", "");
-			document.getElementById("theme-standalone").disabled = false;
-		} else {
-			console.log("Application is running %cIFRAMED%c!", "color: blue", "");
-			document.getElementById("theme-iframe").disabled = false;
-		}
-	</script>
 </html>

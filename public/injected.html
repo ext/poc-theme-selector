@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>injected poc theme selector</title>
+	</head>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html,
+		body {
+			width: 100vw;
+			height: 100vh;
+		}
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #f0a;
+		}
+		iframe {
+			background: #fff;
+			display: block;
+			border: 4px solid #000;
+			width: calc(100vw - 2rem - 4px);
+			height: calc(100vh - 2rem - 4px);
+		}
+	</style>
+	<body>
+		<iframe id="iframe" src="index.html?injected"></iframe>
+		<script type="module">
+			const iframe = document.getElementById("iframe");
+			iframe.addEventListener("load", () => {
+				console.log("load");
+				const link = iframe.contentDocument.createElement("link");
+				link.rel = "stylesheet";
+				link.href = "variables-injected.css";
+				console.log(link, link.outerHTML);
+				console.log(iframe.contentDocument.head);
+				iframe.contentDocument.head.appendChild(link);
+			});
+		</script>
+	</body>
+</html>

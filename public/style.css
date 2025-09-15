@@ -18,3 +18,9 @@
 		display: block;
 	}
 }
+
+@container style(--theme: "injected") {
+	.variant--injected {
+		display: block;
+	}
+}
